@@ -8,17 +8,21 @@ public class LineParser {
 
         List<String> lines = new ArrayList<>();
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(inputPath))) {
+        
+        try (BufferedReader reader = new BufferedReader(
+                new InputStreamReader(new FileInputStream(inputPath), "UTF-8"))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 lines.add(line);
             }
         } catch (IOException e) {
-            System.out.println("입력 파일을 읽는 중 오류 발생: " + e.getMessage());
+            System.out.println("error " + e.getMessage());
             return;
         }
 
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(outputPath))) {
+        
+        try (BufferedWriter writer = new BufferedWriter(
+                new OutputStreamWriter(new FileOutputStream(outputPath), "UTF-8"))) {
             for (int i = 0; i < lines.size(); i++) {
                 String quoted = "\"" + lines.get(i) + "\"";
                 if (i < lines.size() - 1) {
@@ -29,7 +33,7 @@ public class LineParser {
             }
             System.out.println("success");
         } catch (IOException e) {
-            System.out.println("출력 파일 저장 중 오류 발생: " + e.getMessage());
+            System.out.println("error " + e.getMessage());
         }
     }
 }
